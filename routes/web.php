@@ -30,7 +30,8 @@ Route::post('login', [LoginController::class, 'login'])->name('login');
 Route::middleware(['auth_check'])->group(function () {
     
     Route::get('index', [DashboardController::class, 'index'])->name('dashboard_index');
-
+    
+    Route::post('logout', [LoginController::class, 'logout'])->name('dashboard_logout');
 
 
 });

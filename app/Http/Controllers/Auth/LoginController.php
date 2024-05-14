@@ -59,7 +59,17 @@ class LoginController extends Controller
                 "errors" => ["INVALID CREDENTIALS"]
             ]);
         }
+    }
 
+    public function logout()
+    {
+        auth()->logout();
+        
+        return response()->json([
+            "status" => true, 
+            "redirect" => route("dashboard_index"),
+            'success' => 'USER LOGGED OUT SUCCESSFULLY',
+        ]);
     }
 
 }

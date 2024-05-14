@@ -61,13 +61,21 @@
 
                 $('.error-message').html('');
 
+                swal("Logging", "Please wait...", "info");
+
                 $.ajax({
                     url: "{{ route('login') }}",
                     method: "POST",
                     data: formData,
                     success: function(response) {
                         if (response.status) {
-                            window.location.href = response.redirect;
+                            // window.location.href = response.redirect;
+
+                            setTimeout(function() {
+                                swal.close();
+                                window.location.href = response.redirect;
+                            }, 1000);
+
                         } else {
                             swal("Error!", response.errors[0], "error");
                         }
