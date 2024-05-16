@@ -41,7 +41,7 @@
                             <a class="nav-link active" href="#"><i class="fas fa-home"></i>&nbsp;&nbsp;Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-users"></i>&nbsp;&nbsp;Friends List</a>
+                            <a class="nav-link" href="{{ route('user_list') }}"><i class="fas fa-users"></i>&nbsp;&nbsp;Friends List</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link" href="#"><i class="fas fa-user-friends"></i>&nbsp;&nbsp;Friend Request</a>

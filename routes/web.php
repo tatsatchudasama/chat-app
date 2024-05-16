@@ -33,5 +33,12 @@ Route::middleware(['auth_check'])->group(function () {
     
     Route::post('logout', [LoginController::class, 'logout'])->name('dashboard_logout');
 
+    Route::get('friends-list', [DashboardController::class, 'user_list'])->name('user_list');
+    
+    Route::get('user-search', [DashboardController::class, 'user_search'])->name('user_search');
+
+    Route::get('edit-user/{id}', [DashboardController::class, 'edit_user'])->name('edit_user');
+
+    Route::post('update-user/{id}', [DashboardController::class, 'update_user'])->name('update_user');
 
 });
