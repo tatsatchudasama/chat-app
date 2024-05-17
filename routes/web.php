@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
+use App\Http\Controllers\Dashboard\FriendRequestController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -40,5 +41,7 @@ Route::middleware(['auth_check'])->group(function () {
     Route::get('edit-user/{id}', [DashboardController::class, 'edit_user'])->name('edit_user');
 
     Route::post('update-user/{id}', [DashboardController::class, 'update_user'])->name('update_user');
+
+    Route::post('fried-request', [FriendRequestController::class, 'create_friend_request'])->name('fried_request');
 
 });

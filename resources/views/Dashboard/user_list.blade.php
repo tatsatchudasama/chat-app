@@ -7,7 +7,7 @@
 <div class="container">
     <div class="col-md-12">
         <div class="row">
-            <div class="col-sm-8">
+            <div class="col-sm-7">
                 <h2>Friends List</h2>
             </div>
 
@@ -28,6 +28,29 @@
         </div>
     </div>
 </div>
+
+
+
+
+
+<div class="container">
+    <div class="col-md-12">
+        <div class="row">
+            <div class="col-sm">
+
+                <a href="{{ route('registration_view') }}" class="btn btn-primary btn-sm">
+                    <i class="fa fa-plus" aria-hidden="true"></i>
+                </a>
+
+                <a href="{{ route('user_list') }}" class="btn btn-danger btn-sm">
+                    <i class="fa fa-refresh" aria-hidden="true"></i>
+                </a>
+
+            </div>
+        </div>
+    </div>
+</div>
+
 
 <div id="user-list-container">
     @foreach($user_lists as $user_list)
@@ -58,7 +81,7 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-userid="{{ $user_list->id }}">Edit</button>
                         <button type="button" class="btn @if($user_list->status == 'active') btn-success @else btn-danger @endif">{{ $user_list->status }}</button>
                         <button type="button" class="btn btn-warning">{{ $user_list->role }}</button>
-                        <button type="button" class="btn btn-danger">Send Request</button>
+                        <button type="button" class="btn btn-danger send_request" data-userid="{{ $user_list->id }}" id="sendRequestBTN">Send Request</button>
                     </div>
                 </footer>
             </div>
@@ -122,10 +145,6 @@
 </div>
 
 @endsection
-
-
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -297,7 +316,42 @@
             });
         });
 
+        // ===============================================================
+        //                           fried request
+        // ===============================================================
+        $('.send_request').click(function(e) {
+            e.preventDefault();
 
+            var userId = $(this).data('userid');
+            var $button = $(this);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $button.prop('disabled', true).text('Sending Request...');
+
+            $.ajax({
+                url: "{{ route('fried_request') }}",
+                method: "POST",
+                data: {
+                    receiver_user_email: userId
+                },
+                success: function(response) {
+
+                    $button.text('Sending...!').prop('disabled', true);
+                    swal("success", response.success, "success");
+
+                },
+                error: function(error) {
+                    console.log(error);
+                    $button.text('Send Request').prop('disabled', false);
+
+                }
+            });
+        });
 
     });
 </script>
