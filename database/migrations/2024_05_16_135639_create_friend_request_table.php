@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->string('sender_email');
             $table->string('receiver_email');
-            $table->enum('status', ['accept', 'reject']);
+            $table->enum('status', ['pending', 'accept', 'reject'])->default('pending');
             $table->timestamps();
         });
     }

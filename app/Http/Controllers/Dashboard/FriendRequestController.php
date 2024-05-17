@@ -51,6 +51,8 @@ class FriendRequestController extends Controller
 
     }
 
+
+
     // public function create_friend_request123(Request $request)
     // {
     //     $login_user_email = auth()->user()->email;

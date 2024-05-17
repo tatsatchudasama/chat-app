@@ -3,6 +3,8 @@
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\FriendRequestController;
+use App\Http\Controllers\Dashboard\friend_request_list;
+use App\Http\Controllers\Dashboard\FriendRequestList;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -29,13 +31,13 @@ Route::post('login', [LoginController::class, 'login'])->name('login');
 
 
 Route::middleware(['auth_check'])->group(function () {
-    
+
     Route::get('index', [DashboardController::class, 'index'])->name('dashboard_index');
-    
+
     Route::post('logout', [LoginController::class, 'logout'])->name('dashboard_logout');
 
     Route::get('friends-list', [DashboardController::class, 'user_list'])->name('user_list');
-    
+
     Route::get('user-search', [DashboardController::class, 'user_search'])->name('user_search');
 
     Route::get('edit-user/{id}', [DashboardController::class, 'edit_user'])->name('edit_user');
@@ -44,4 +46,10 @@ Route::middleware(['auth_check'])->group(function () {
 
     Route::post('fried-request', [FriendRequestController::class, 'create_friend_request'])->name('fried_request');
 
+    Route::get('friend-request-list', [FriendRequestList::class, 'friend_request_list'])->name('friend_request_list');
+
+    Route::post('accept-request', [FriendRequestList::class, 'accept_request'])->name('accept_request');
+
+    Route::post('reject-request', [FriendRequestList::class, 'reject_request'])->name('reject_request');
+    
 });
