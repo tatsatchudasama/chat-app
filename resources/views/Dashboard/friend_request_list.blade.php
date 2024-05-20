@@ -82,9 +82,7 @@
             $.ajax({
                 url: "{{ route('accept_request') }}",
                 method: "POST",
-                data: {
-                    id: requestId
-                },
+                data: { id: requestId },
                 success: function(response) {
                     swal("Success", response.success, "success");
                     $button.closest('tr').find('.reject-request').prop('disabled', true);

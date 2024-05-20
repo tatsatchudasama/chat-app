@@ -49,7 +49,7 @@
                             <a class="nav-link" href="{{ route('friend_request_list') }}"><i class="fas fa-user-friends"></i>&nbsp;&nbsp;Friend Request</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link" href="#"><i class="fas fa-comment-dots"></i>&nbsp;&nbsp;Chat</a>
+                            <a class="nav-link" href="{{ route('chat_view') }}"><i class="fas fa-comment-dots"></i>&nbsp;&nbsp;Chat</a>
                         </li>
                     </ul>
                 </div>

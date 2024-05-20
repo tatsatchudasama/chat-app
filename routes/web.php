@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Dashboard\chatUserController;
 use App\Http\Controllers\Dashboard\DashboardController;
 use App\Http\Controllers\Dashboard\FriendRequestController;
 use App\Http\Controllers\Dashboard\friend_request_list;
@@ -52,4 +53,10 @@ Route::middleware(['auth_check'])->group(function () {
 
     Route::post('reject-request', [FriendRequestList::class, 'reject_request'])->name('reject_request');
     
+    Route::get('chat-view', [chatUserController::class, 'chat_view'])->name('chat_view');
+
+    Route::post('chat', [chatUserController::class, 'chat'])->name('chat');
+
+    Route::get('get-message', [chatUserController::class, 'get_message'])->name('get_message');
+
 });
