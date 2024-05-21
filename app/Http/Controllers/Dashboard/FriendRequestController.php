@@ -51,4 +51,27 @@ class FriendRequestController extends Controller
 
     }
 
+
+    public function un_friend_request(Request $request){
+
+        $login_user_email = auth()->user()->email;
+        
+        $receiverUserId = $request->input('receiver_user_id');
+        $receiverUserEmail = $request->input('receiver_user_email');
+
+        $friendRequest = FriendRequest::where('sender_email', $login_user_email)
+                                      ->where('receiver_email', $receiverUserEmail)
+                                      ->first();
+
+        if ($friendRequest) {
+
+            $friendRequest->delete();
+
+            return response()->json([
+                'success' => 'USER REQUEST DISABLE SUCCESSFULLY',
+            ]);
+        }
+
+    }
+
 }

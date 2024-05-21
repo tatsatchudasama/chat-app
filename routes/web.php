@@ -46,6 +46,9 @@ Route::middleware(['auth_check'])->group(function () {
     Route::post('update-user/{id}', [DashboardController::class, 'update_user'])->name('update_user');
 
     Route::post('fried-request', [FriendRequestController::class, 'create_friend_request'])->name('fried_request');
+    Route::post('un-friend-request', [FriendRequestController::class, 'un_friend_request'])->name('un_friend_request');
+    
+
 
     Route::get('friend-request-list', [FriendRequestList::class, 'friend_request_list'])->name('friend_request_list');
 
