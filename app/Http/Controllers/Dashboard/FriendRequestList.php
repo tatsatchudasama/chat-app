@@ -17,7 +17,9 @@ class FriendRequestList extends Controller
         $friendRequests = FriendRequest::where('receiver_email', '=', auth()->user()->email)->get();
 
         if ($request->ajax()) {
-            return response()->json($friendRequests);
+            return response()->json(
+                $friendRequests
+            );
         }
 
         return view('Dashboard.friend_request_list');
@@ -35,6 +37,25 @@ class FriendRequestList extends Controller
 
             return response()->json([
                 'success' => 'FRIEND REQUEST ACCEPTED SUCCESSFULLY',
+            ]);
+        } else {
+            return response()->json([
+                'error' => 'FRIEND REQUEST NOT FOUND',
+            ], 404);
+        }
+    }
+
+    public function un_accept_request(Request $request)
+    {
+        $friendRequest = FriendRequest::find($request->id);
+
+        if ($friendRequest) {
+
+            $friendRequest->status = 'pending';
+            $friendRequest->update();
+
+            return response()->json([
+                'success' => 'FRIEND REQUEST PENDING SUCCESSFULLY',
             ]);
         } else {
             return response()->json([

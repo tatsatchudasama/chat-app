@@ -110,9 +110,9 @@
                             '<td>' + count++ + '</td>' +
                             '<td>' + friendRequests.sender_email + '</td>' +
                             '<td>' +
-                            // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="' + friendRequests.id + '">Chat</button> &nbsp;' +
-                            // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '">Chat Email</button>' + '</td>' +
-                            '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '" data-id="' + friendRequests.id + '">Send Message</button>' +
+                                // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="' + friendRequests.id + '">Chat</button> &nbsp;' +
+                                // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '">Chat Email</button>' + '</td>' +
+                                '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '" data-id="' + friendRequests.id + '">Send Message</button>' +
                             '</tr>';
 
                         $('#acceptFriendRequestsTable tbody').append(row);

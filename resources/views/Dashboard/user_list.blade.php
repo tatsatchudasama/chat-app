@@ -74,7 +74,7 @@
                 </div>
                 <footer class="card-footer flexbox align-items-center">
                     <div>
-                        <strong>Applied on:</strong>
+                        <strong>Applied on :</strong>
                         <span>{{ $user_list->created_at->format('Y M,d H:i:s') }}</span>
                     </div>
                     <div class="card-hover-show">

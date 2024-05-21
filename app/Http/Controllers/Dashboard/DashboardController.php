@@ -37,49 +37,6 @@ class DashboardController extends Controller
 
         return response()->json($user_lists_search);
     }
-    
-    // public function edit_user($id) {
-    //     $edit_user = User::find($id);
-    
-    //     if (!$edit_user) {
-    //         return response()->json([
-    //             'error' => 'USER NOT FOUND',
-    //         ]);
-    //     }
-
-    //     return response()->json($edit_user);
-    // }
-
-
-    // public function update_user(Request $request, $id) {
-    //     $request->validate([
-    //         'name' => 'required',
-    //         'email' => 'required|email|unique:users,email,' . $request->id,
-    //         'phone' => 'required|digits:10|unique:users,phone,' . $request->id,
-    //         'address' => 'required',
-    //     ]);
-
-    //     $user = User::find($id);
-    
-    //     if (!$user) {
-    //         return response()->json(['error' => 'USER NOT FOUND']);
-    //     }
-    
-    //     $user->update([
-    //         'name' => $request->name,
-    //         'email' => $request->email,
-    //         'password' => $request->password,
-    //         'phone' => $request->phone,
-    //         'address' => $request->address,
-    //     ]);
-    
-    //     return response()->json([
-    //         'user' => $user,
-    //         'success' => 'DATA UPDATE SUCCESSFULLY',
-    //     ]);
-        
-    // }
-    
 
     public function edit_user($id) {
         // Find the user by ID
@@ -126,6 +83,5 @@ class DashboardController extends Controller
             'success' => 'DATA UPDATED SUCCESSFULLY',
         ]);
     }
-    
 
 }

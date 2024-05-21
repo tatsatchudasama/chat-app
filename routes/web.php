@@ -50,6 +50,7 @@ Route::middleware(['auth_check'])->group(function () {
     Route::get('friend-request-list', [FriendRequestList::class, 'friend_request_list'])->name('friend_request_list');
 
     Route::post('accept-request', [FriendRequestList::class, 'accept_request'])->name('accept_request');
+    Route::post('un-accept-request', [FriendRequestList::class, 'un_accept_request'])->name('un_accept_request');
 
     Route::post('reject-request', [FriendRequestList::class, 'reject_request'])->name('reject_request');
     

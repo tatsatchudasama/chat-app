@@ -36,7 +36,6 @@
             url: "{{ route('friend_request_list') }}",
             method: "GET",
             success: function(response) {
-                console.log(response.success);
 
                 if (response.length === 0) {
                     var noDataMessage = '<tr><td colspan="3" class="text-center">No friend requests found</td></tr>';
@@ -46,11 +45,18 @@
                     var count = 1;
                     $.each(response, function(index, friendRequests) {
 
+                        var statusBTN = '';
+
+                        if (friendRequests.status === 'accept') {
+                            statusBTN = '<button class="btn btn-primary un_accept-request" data-id="' + friendRequests.id + '">Un Accept</button> &nbsp;'
+                        } else {
+                            statusBTN = '<button class="btn btn-success accept-request" data-id="' + friendRequests.id + '">Accept</button> &nbsp;'
+                        }
+
                         var row = '<tr>' +
                             '<td>' + count++ + '</td>' +
                             '<td>' + friendRequests.sender_email + '</td>' +
-                            '<td>' +
-                            '<button class="btn btn-success accept-request" data-id="' + friendRequests.id + '">Accept</button> &nbsp;' +
+                            '<td>' + statusBTN +
                             '<button class="btn btn-danger reject-request" data-id="' + friendRequests.id + '">Reject</button>' +
                             '</td>' +
                             '</tr>';
@@ -82,11 +88,50 @@
             $.ajax({
                 url: "{{ route('accept_request') }}",
                 method: "POST",
-                data: { id: requestId },
+                data: {
+                    id: requestId
+                },
                 success: function(response) {
                     swal("Success", response.success, "success");
+                    $button.replaceWith('<button class="btn btn-primary">Un Accept</button>');
                     $button.closest('tr').find('.reject-request').prop('disabled', true);
-                    $button.prop('disabled', true);
+                    
+                    setTimeout(function(){
+                        location.reload();
+                    }, 1000); 
+                },
+                error: function(error) {
+                    console.log(error);
+                }
+            });
+        });
+
+        // ===============================================================
+        //                       UN Accept Request 
+        // ===============================================================
+        $(document).on('click', '.un_accept-request', function() {
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            var requestId = $(this).data('id');
+            var $button = $(this);
+
+            $.ajax({
+                url: "{{ route('un_accept_request') }}",
+                method: "POST",
+                data: {
+                    id: requestId
+                },
+                success: function(response) {
+
+                    swal("Success", response.success, "success");
+                    $button.replaceWith('<button class="btn btn-success accept-request" data-id="' + requestId + '">Accept</button>');
+                    $button.closest('tr').find('.reject-request').prop('disabled', true);
+
                 },
                 error: function(error) {
                     console.log(error);
@@ -120,7 +165,9 @@
                         $.ajax({
                             url: "{{ route('reject_request') }}",
                             method: "POST",
-                            data: { id: requestId },
+                            data: {
+                                id: requestId
+                            },
                             success: function(response) {
                                 console.log(response);
                                 $button.closest('.friend-request-item').remove();

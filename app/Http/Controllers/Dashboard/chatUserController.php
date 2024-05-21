@@ -77,32 +77,3 @@ class chatUserController extends Controller
 }
 
 
-
-    // public function get_message(Request $request) {
-    //     $login_user_email = auth()->user()->email;
-
-    //     $receiver_user_id = $request->input('receiver_user_emails');
-    //     $receiver_user = ChatUser::find('receiver_email', $receiver_user_id)->get();
-
-    //     dd($receiver_user);
-
-    //     if (!$receiver_user) {
-    //         return response()->json(['error' => 'User not found'], 404);
-    //     }
-
-    //     $get_messages = ChatUser::where('sender_email', $login_user_email)
-    //                             ->where('receiver_email', $receiver_user)
-    //                             ->get();
-
-    //     return response()->json($get_messages);
-
-    // }
-
-
-    // $messages = ChatUser::where(function ($query) use ($login_user_email, $receiver_user_email) {
-    //     $query->where('sender_email', $login_user_email)
-    //           ->where('receiver_email', $receiver_user_email);
-    // })->orWhere(function ($query) use ($login_user_email, $receiver_user_email) {
-    //     $query->where('sender_email', $receiver_user_email)
-    //           ->where('receiver_email', $login_user_email);
-    // })->get();
