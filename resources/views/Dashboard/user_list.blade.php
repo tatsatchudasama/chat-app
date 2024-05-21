@@ -81,7 +81,14 @@
                         <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal" data-userid="{{ $user_list->id }}">Edit</button>
                         <button type="button" class="btn @if($user_list->status == 'active') btn-success @else btn-danger @endif">{{ $user_list->status }}</button>
                         <button type="button" class="btn btn-warning">{{ $user_list->role }}</button>
-                        <button type="button" class="btn btn-danger send_request" data-userid="{{ $user_list->id }}" id="sendRequestBTN">Send Request</button>
+
+                        @if($friendRequests->where('receiver_email', $user_list->email)->where('sender_email', Auth::user()->email)->first())
+                            <button type="button" class="btn btn-secondary un_send_request" data-userid="{{ $user_list->id }}" data-userEmail="{{ $user_list->email }}" id="Un_sendRequestBTN">Sending Request...</button>
+                        @else
+                            <button type="button" class="btn btn-danger send_request" data-userid="{{ $user_list->id }}" id="sendRequestBTN">Send Request</button>
+                        @endif
+
+                        <!-- <button type="button" class="btn btn-danger send_request" data-userid="{{ $user_list->id }}" id="sendRequestBTN">Send Request</button> -->
                     </div>
                 </footer>
             </div>
@@ -177,8 +184,6 @@
                     // console.log(data);
 
                     $('#user-list-container').empty();
-
-                    console.log(data.length);
 
                     if (data.length === 0) {
 
@@ -331,8 +336,6 @@
                 }
             });
 
-            $button.prop('disabled', true).text('Sending Request...');
-
             $.ajax({
                 url: "{{ route('fried_request') }}",
                 method: "POST",
@@ -341,8 +344,17 @@
                 },
                 success: function(response) {
 
-                    $button.text('Sending...!').prop('disabled', true);
                     swal("success", response.success, "success");
+
+                    $button.removeClass('btn-danger send_request')
+                           .addClass('btn-secondary un_send_request')
+                           .text('Sending Request...')
+                           .prop('disabled', false)
+                           .data('useremail', userId);
+                        
+                           setTimeout(function(){
+                                location.reload();
+                            }, 1000); 
 
                 },
                 error: function(error) {
@@ -352,6 +364,51 @@
                 }
             });
         });
+
+        // ===============================================================
+        //                       Un fried request send
+        // ===============================================================
+        $('.un_send_request').click(function(e) {
+            e.preventDefault();
+
+            var userId = $(this).data('userid');
+            var userEmail = $(this).data('useremail');
+            var $button = $(this);
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajax({
+                url: "{{ route('un_friend_request') }}",
+                method: "POST",
+                data: {
+                    receiver_user_id: userId,
+                    receiver_user_email: userEmail
+                },
+                success: function(response) {
+                    swal("success", response.success, "success");
+
+                    $button.removeClass('btn-secondary un_send_request')
+                           .addClass('btn-danger send_request')
+                           .text('Send Request')
+                           .prop('disabled', false)
+                           .data('userid', userId);
+
+                           setTimeout(function(){
+                                location.reload();
+                            }, 1000); 
+
+                },
+                error: function(error) {
+                    console.log(error);
+                    $button.text('Un Send Request').prop('disabled', false); // Re-enable the button
+                }
+            });
+        });
+
 
     });
 </script>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Dashboard;
 
 use App\Http\Controllers\Controller;
 use App\Models\User;
+use App\Models\FriendRequest;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -11,22 +12,20 @@ use Illuminate\Support\Facades\Auth;
 class DashboardController extends Controller
 {
     public function index(){
-
-
         $user = Auth::user();
+
         return view('Dashboard.index', compact('user'));
-
-        // $user = User::where('id', '=', auth()->user()->id)->get();
-
-        // return view('Dashboard.index', compact('user'));
     }
 
     public function user_list(){
+
         $user_lists = User::where('role', '!=', 'admin')
                           ->where('id', '!=', auth()->user()->id)
                           ->get();
 
-        return view('Dashboard.user_list', compact('user_lists'));
+        $friendRequests = FriendRequest::where('sender_email', '=', auth()->user()->email)->get();
+
+        return view('Dashboard.user_list', compact('user_lists', 'friendRequests'));
     }
 
     public function user_search(Request $request){
