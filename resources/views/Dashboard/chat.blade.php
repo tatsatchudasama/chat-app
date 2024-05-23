@@ -110,9 +110,9 @@
                             '<td>' + count++ + '</td>' +
                             '<td>' + friendRequests.sender_email + '</td>' +
                             '<td>' +
-                                // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="' + friendRequests.id + '">Chat</button> &nbsp;' +
-                                // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '">Chat Email</button>' + '</td>' +
-                                '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '" data-id="' + friendRequests.id + '">Send Message</button>' +
+                            // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-id="' + friendRequests.id + '">Chat</button> &nbsp;' +
+                            // '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '">Chat Email</button>' + '</td>' +
+                            '<button class="btn btn-primary chat-user" data-bs-toggle="modal" data-bs-target="#exampleModal" data-email="' + friendRequests.sender_email + '" data-id="' + friendRequests.id + '">Send Message</button>' +
                             '</tr>';
 
                         $('#acceptFriendRequestsTable tbody').append(row);
@@ -125,22 +125,10 @@
             }
         });
 
-
         // ===============================================================
         //                     Send a new chat message
         // ===============================================================
-        $(document).on('click', '.chat-user', function() {
-            requestId = $(this).data('id');
-        });
-
         $('#message-form').on('submit', function(e) {
-
-            $.ajaxSetup({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                }
-            });
-
             e.preventDefault();
 
             var message = $('.message-input').val();
@@ -150,6 +138,12 @@
                 return;
             }
 
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
             $.ajax({
                 url: "{{ route('chat') }}",
                 method: "POST",
@@ -158,29 +152,33 @@
                     receiver_user_email: requestId
                 },
                 success: function(response) {
-                    console.log(response.success);
-
                     $('.message-input').val('');
 
+                    $('#sender_message').append('<div class="alert alert-secondary" role="alert">' + message + '</div>');
+
+                    var chatWindow = $('#chat-window');
+                    chatWindow.scrollTop(chatWindow[0].scrollHeight);
                 },
                 error: function(error) {
                     console.log(error);
                 }
             });
-            email0
         });
+
 
         // ===============================================================
         //                          Chat Get
         // ===============================================================
-        var receiverEmail = '';
         $(document).on('click', '.chat-user', function() {
+            requestId = $(this).data('id');
+            var receiverEmail = $(this).data('email');
 
-            receiverEmail = $(this).data('email');
-
-            // chat title
             $('#chat-receiverEmail-name').html('Chat with: <b class="text-dark">' + receiverEmail + '</b>');
 
+            fetchMessages(receiverEmail);
+        });
+
+        function fetchMessages(receiverEmail) {
             $.ajax({
                 url: "{{ route('get_message') }}",
                 method: "GET",
@@ -190,6 +188,26 @@
                 success: function(response) {
                     $('#receiver_message').empty();
                     $('#sender_message').empty();
+
+
+                    // if (response && response.get_messages) {
+                    //     response.get_messages.forEach(function(message) {
+                    //         if (message.sender_email === '{{ auth()->user()->email }}') {
+                    //             $('#sender_message').append('<div class="alert alert-secondary" role="alert">' + message.message + '</div>');
+                    //         }
+                    //     });
+                    // }
+
+                    // if (response && response.send_messages) {
+                    //     response.send_messages.forEach(function(message) {
+                    //         if (message.receiver_email === '{{ auth()->user()->email }}') {
+                    //             $('#receiver_message').append('<div class="alert alert-danger" role="alert">' + message.message + '</div>');
+                    //         }
+                    //     });
+                    // } else {
+                    //     var noDataMessage = '<div class="alert alert-warning" role="alert">No chat messages found.</div>';
+                    //     $('#receiver_message').append(noDataMessage);
+                    // }
 
                     if (response && response.get_messages) {
                         response.get_messages.forEach(function(message) {
@@ -214,7 +232,100 @@
                     console.log(error);
                 }
             });
-        });
+        }
+
 
     });
 </script>
+
+
+
+<!-- // ===============================================================
+//                     Send a new chat message
+// ===============================================================
+$(document).on('click', '.chat-user', function() {
+    requestId = $(this).data('id');
+});
+
+$('#message-form').on('submit', function(e) {
+
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    e.preventDefault();
+
+    var message = $('.message-input').val();
+
+    if (message.trim() === '') {
+        alert('Message cannot be empty');
+        return;
+    }
+
+    $.ajax({
+        url: "{{ route('chat') }}",
+        method: "POST",
+        data: {
+            message: message,
+            receiver_user_email: requestId
+        },
+        success: function(response) {
+            console.log(response.success);
+
+            $('.message-input').val('');
+
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+    email0
+});
+
+// ===============================================================
+//                          Chat Get
+// ===============================================================
+var receiverEmail = '';
+$(document).on('click', '.chat-user', function() {
+
+    receiverEmail = $(this).data('email');
+
+    // chat title
+    $('#chat-receiverEmail-name').html('Chat with: <b class="text-dark">' + receiverEmail + '</b>');
+
+    $.ajax({
+        url: "{{ route('get_message') }}",
+        method: "GET",
+        data: {
+            receiver_user_emails: receiverEmail
+        },
+        success: function(response) {
+            $('#receiver_message').empty();
+            $('#sender_message').empty();
+
+            if (response && response.get_messages) {
+                response.get_messages.forEach(function(message) {
+                    if (message.sender_email === '{{ auth()->user()->email }}') {
+                        $('#sender_message').append('<div class="alert alert-secondary" role="alert">' + message.message + '</div>');
+                    }
+                });
+            }
+
+            if (response && response.send_messages) {
+                response.send_messages.forEach(function(message) {
+                    if (message.receiver_email === '{{ auth()->user()->email }}') {
+                        $('#receiver_message').append('<div class="alert alert-danger" role="alert">' + message.message + '</div>');
+                    }
+                });
+            } else {
+                var noDataMessage = '<div class="alert alert-warning" role="alert">No chat messages found.</div>';
+                $('#receiver_message').append(noDataMessage);
+            }
+        },
+        error: function(error) {
+            console.log(error);
+        }
+    });
+}); -->

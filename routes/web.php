@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Auth\forgatPasswordController;
 use App\Http\Controllers\Auth\LoginController;
 use App\Http\Controllers\Dashboard\chatUserController;
 use App\Http\Controllers\Dashboard\DashboardController;
@@ -19,17 +20,18 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-
-
 Route::get('registration-view', [LoginController::class, 'registration_view'])->name('registration_view');
 Route::post('registration', [LoginController::class, 'registration'])->name('registration');
 
-Route::get('login-view', [LoginController::class, 'login_view'])->name('login_view');
+Route::get('', [LoginController::class, 'login_view'])->name('login_view'); //login-view
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
+
+Route::get('forgot-password', [forgatPasswordController::class, 'forgot_password'])->name('forgot_password');
+Route::post('password-change-email', [forgatPasswordController::class, 'password_change_email'])->name('password_change_email');
+
+Route::get('password-reset-view/{token}', [forgatPasswordController::class, 'password_reset_view'])->name('password_reset_view');
+Route::post('password-reset/{token}', [forgatPasswordController::class, 'password_reset'])->name('password_reset');
 
 Route::middleware(['auth_check'])->group(function () {
 
@@ -47,7 +49,6 @@ Route::middleware(['auth_check'])->group(function () {
 
     Route::post('fried-request', [FriendRequestController::class, 'create_friend_request'])->name('fried_request');
     Route::post('un-friend-request', [FriendRequestController::class, 'un_friend_request'])->name('un_friend_request');
-    
 
 
     Route::get('friend-request-list', [FriendRequestList::class, 'friend_request_list'])->name('friend_request_list');
