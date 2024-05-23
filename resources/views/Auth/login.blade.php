@@ -34,7 +34,7 @@
             <a href="{{ route('registration_view') }}">Register</a>
 
             <div class="mt-3">
-                <a href="#">Forgat Password</a>
+                <a href="{{ route('forgot_password') }}">Forgat Password</a>
             </div>
 
         </form>
@@ -81,13 +81,8 @@
                         }
                     },
                     error: function(error) {
-                        // var err = JSON.parse(xhr.responseText);
-                        // $('#emailError').html(err.errors.email);
-                        // $('#passwordError').html(err.errors.password);
-
                         $('#emailError').html(error.responseJSON.errors.email);
                         $('#passwordError').html(error.responseJSON.errors.password);
-                        
                     }
                 });
             });
