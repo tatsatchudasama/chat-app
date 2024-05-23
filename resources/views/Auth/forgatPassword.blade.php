@@ -28,9 +28,7 @@
 
             <button type="submit" class="btn btn-primary" id="saveBTN">Submit</button>
 
-            <div class="mt-3">
-                <a href="{{ route('login_view') }}">Login</a>
-            </div>
+            <a href="{{ route('login_view') }}">Login</a>
 
         </form>
     </div>

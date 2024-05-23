@@ -10,34 +10,39 @@
 
 <body>
 
-    <div class="container">
-        <h2>Login Form</h2>
+    <div class="card card-outline-secondary m-5">
+        <div class="card-header">
+            <h3 class="mb-0">Login Form</h3>
+        </div>
+        <div class="card-body">
 
-        <form id="loginForm">
+            <form id="loginForm">
+
+                <meta name="csrf-token" content="{{ csrf_token() }}">
+
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control border" name="email" placeholder="Enter email">
+                    <div id="emailError" class="text-danger error-message"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control border" name="password" placeholder="Enter password">
+                    <div id="passwordError" class="text-danger error-message"></div>
+                </div>
+
+                <button type="submit" class="btn btn-primary" id="saveBTN">Submit</button>
+
+                <a href="{{ route('registration_view') }}">Register</a>
+
+                <div class="mt-3">
+                    <a href="{{ route('forgot_password') }}">Forgat Password</a>
+                </div>
+
+            </form>
             
-            <meta name="csrf-token" content="{{ csrf_token() }}">
-
-            <div class="form-group">
-                <label for="email">Email address:</label>
-                <input type="email" class="form-control border" name="email" placeholder="Enter email">
-                <div id="emailError" class="text-danger error-message"></div>
-            </div>
-
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control border" name="password" placeholder="Enter password">
-                <div id="passwordError" class="text-danger error-message"></div>
-            </div>
-
-            <button type="submit" class="btn btn-primary" id="saveBTN">Submit</button>
-
-            <a href="{{ route('registration_view') }}">Register</a>
-
-            <div class="mt-3">
-                <a href="{{ route('forgot_password') }}">Forgat Password</a>
-            </div>
-
-        </form>
+        </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
@@ -54,7 +59,7 @@
             });
 
             $('#loginForm').submit(function(e) {
-                
+
                 e.preventDefault();
 
                 var formData = $(this).serialize();

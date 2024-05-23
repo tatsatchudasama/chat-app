@@ -10,53 +10,58 @@
 
 <body>
 
-    <div class="container">
-        <h2>Registration Form</h2>
 
-        <form id="register">
-            <meta name="csrf-token" content="{{ csrf_token() }}">
+    <div class="card card-outline-secondary m-5">
+        <div class="card-header">
+            <h3 class="mb-0">Registration Form</h3>
+        </div>
+        <div class="card-body">
+            <form id="register">
+                <meta name="csrf-token" content="{{ csrf_token() }}">
 
-            <div class="form-group">
-                <label for="name">Name:</label>
-                <input type="text" class="form-control border" name="name" placeholder="Enter name">
-                <div id="nameError" class="text-danger error-message"></div>
-            </div>
+                <div class="form-group">
+                    <label for="name">Name:</label>
+                    <input type="text" class="form-control border" name="name" placeholder="Enter name">
+                    <div id="nameError" class="text-danger error-message"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="email">Email address:</label>
-                <input type="email" class="form-control border" name="email" placeholder="Enter email">
-                <div id="emailError" class="text-danger error-message"></div>
-            </div>
+                <div class="form-group">
+                    <label for="email">Email address:</label>
+                    <input type="email" class="form-control border" name="email" placeholder="Enter email">
+                    <div id="emailError" class="text-danger error-message"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="mobile">Mobile Number:</label>
-                <input type="text" class="form-control border" name="phone" placeholder="Enter mobile number" maxlength="10">
-                <div id="phoneError" class="text-danger error-message"></div>
-            </div>
+                <div class="form-group">
+                    <label for="mobile">Mobile Number:</label>
+                    <input type="text" class="form-control border" name="phone" placeholder="Enter mobile number" maxlength="10">
+                    <div id="phoneError" class="text-danger error-message"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="address">Address:</label>
-                <textarea class="form-control border" cols="3" rows="3" name="address" placeholder="Enter address"></textarea>
-                <div id="addressError" class="text-danger error-message"></div>
-            </div>
+                <div class="form-group">
+                    <label for="address">Address:</label>
+                    <textarea class="form-control border" cols="3" rows="3" name="address" placeholder="Enter address"></textarea>
+                    <div id="addressError" class="text-danger error-message"></div>
+                </div>
 
-            <div class="form-group">
-                <label for="password">Password:</label>
-                <input type="password" class="form-control border" name="password" placeholder="Enter password">
-                <div id="passwordError" class="text-danger error-message"></div>
-            </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" class="form-control border" name="password" placeholder="Enter password">
+                    <div id="passwordError" class="text-danger error-message"></div>
+                </div>
 
-            <button type="submit" class="btn btn-primary" id="saveBTN">Submit</button>
+                <button type="submit" class="btn btn-primary" id="saveBTN">Submit</button>
 
-            <a href="{{ route('login_view') }}">Login</a>
+                <a href="{{ route('login_view') }}">Login</a>
 
-            <div class="mt-3">
-                <a href="#">Forgat Password</a>
-            </div>
+                <div class="mt-3">
+                    <a href="{{ route('forgot_password') }}">Forgat Password</a>
+                </div>
 
-        </form>
+            </form>
 
+        </div>
     </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
