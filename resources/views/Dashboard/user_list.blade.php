@@ -31,8 +31,6 @@
 
 
 
-
-
 <div class="container">
     <div class="col-md-12">
         <div class="row">
@@ -46,7 +44,7 @@
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </a>
 
-                <a href="" class="btn btn-danger btn-sm">
+                <a href="{{ route('user_list_pdf') }}" id="download-pdf" class="btn btn-danger btn-sm">
                     <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
                 </a>
 
@@ -162,6 +160,7 @@
 <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
 <script>
+    
     $(document).ready(function() {
 
         // ===============================================================

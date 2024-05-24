@@ -39,6 +39,8 @@ Route::middleware(['auth_check'])->group(function () {
 
     Route::get('friends-list', [DashboardController::class, 'user_list'])->name('user_list');
 
+    Route::get('user-list-pdf', [DashboardController::class, 'user_list_pdf'])->name('user_list_pdf');
+
     Route::get('user-search', [DashboardController::class, 'user_search'])->name('user_search');
 
     Route::get('edit-user/{id}', [DashboardController::class, 'edit_user'])->name('edit_user');
