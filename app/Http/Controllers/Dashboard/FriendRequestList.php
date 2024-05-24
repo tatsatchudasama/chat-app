@@ -14,7 +14,15 @@ class FriendRequestList extends Controller
     public function friend_request_list(Request $request)
     {
 
+        // list of accept request user
         $friendRequests = FriendRequest::where('receiver_email', '=', auth()->user()->email)->get();
+
+        // total request
+        $total_request = FriendRequest::where('receiver_email', auth()->user()->email)->count();
+        // total request accept
+        $total_request_accept = FriendRequest::where('receiver_email', auth()->user()->email)
+                                             ->where('status', 'accept')  
+                                             ->count();
 
         if ($request->ajax()) {
             return response()->json(
@@ -22,7 +30,7 @@ class FriendRequestList extends Controller
             );
         }
 
-        return view('Dashboard.friend_request_list');
+        return view('Dashboard.friend_request_list', compact('total_request', 'total_request_accept'));
     }
 
 
@@ -103,4 +111,5 @@ class FriendRequestList extends Controller
 
         }
     }
+
 }

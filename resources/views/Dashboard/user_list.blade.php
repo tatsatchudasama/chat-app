@@ -71,7 +71,7 @@
                     </div>
                     <div class="media-right text-right d-none d-md-block">
                         <p class="fs-14 text-fade mb-12"><i class="fa fa-map-marker pr-1"></i>{{ $user_list->address }}</p>
-                        <span class="text-fade"><i class="fa fa-money pr-1"></i>{{ $user_list->phone }}</span>
+                        <span class="text-fade"><i class="fa fa-phone pr-1"></i>{{ $user_list->phone }}</span>
                     </div>
                 </div>
                 <footer class="card-footer flexbox align-items-center">
