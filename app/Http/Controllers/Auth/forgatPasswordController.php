@@ -21,7 +21,6 @@ class forgatPasswordController extends Controller
     }
 
     public function password_change_email(Request $request){
-
         $request->validate([
             'email' => 'required|email|exists:users,email',
         ]);
@@ -41,10 +40,11 @@ class forgatPasswordController extends Controller
             ->to('tatsatcreativeinfoway@gmail.com')
             ->send(new PasswordChnage($email, $token));
 
-        return redirect()->route('login_view')->with('status', 'Email send successfully.');
-        
+        return response()->json([
+            'success' => 'EMAIL SEND SUCCESSFULLY',
+        ]);
     }
-    
+
     public function password_reset_view($token){
         return view('Auth.passwordReset', compact('token'));
     }
@@ -59,20 +59,28 @@ class forgatPasswordController extends Controller
         $passwordResetToken = DB::table("password_reset_tokens")->where('token', $token)->pluck('email')->first();
 
         if (!$passwordResetToken) {
-            return redirect()->back()->withErrors(['email' => 'Invalid token provided.']);
+            return response()->json([
+                "status" => false,
+                "errors" => ["INVALID TOKEN PROVIDED"]
+            ]);
         }
     
         if ($request->email !== $passwordResetToken) {
-            return redirect()->back()->withErrors(['email' => 'This email does not match the token provided.']);
+            return response()->json([
+                "status" => false,
+                "errors" => ["THIS EMAIL DOSE NOT MATCH THE TOKEN PROVIDED"]
+            ]);
         }
-    
+
         $user = User::where('email', $passwordResetToken)->firstOrFail();
-    
+
         $user->password = bcrypt($request->password);
         $user->save();
-    
-        return redirect()->route('login_view')->with('status', 'Password has been reset successfully.');
-    
 
+        return response()->json([
+            'success' => 'PASSWORD HAS BEEN RESET SUCCESSFULLY',
+        ]);
     }
+
+
 }

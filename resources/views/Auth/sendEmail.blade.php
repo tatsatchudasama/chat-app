@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Password Forgot</title>
+    <title>Password Forgot Email</title>
 </head>
 
 <body>
