@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bootstrap Sidebar Menu</title>
+    <title>Registration</title>
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css" rel="stylesheet">
 </head>
 
@@ -52,10 +52,6 @@
                 <button type="submit" class="btn btn-primary" id="saveBTN">Submit</button>
 
                 <a href="{{ route('login_view') }}">Login</a>
-
-                <div class="mt-3">
-                    <a href="{{ route('forgot_password') }}">Forgat Password</a>
-                </div>
 
             </form>
 

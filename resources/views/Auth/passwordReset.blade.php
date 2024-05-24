@@ -17,29 +17,26 @@
         </div>
         <div class="card-body">
 
-            <form action="{{ route('password_reset', ['token' => $token]) }}" method="POST" autocomplete="off">
-                @csrf
+            <form id="passwordResetForm" autocomplete="off">
+
+                <meta name="csrf-token" content="{{ csrf_token() }}">
 
                 <div class="form-group">
                     <label for="email">Email</label>
                     <input type="email" class="form-control" id="email" name="email">
-                    @error('email')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
-
+                    <div id="emailError" class="text-danger"></div>
                 </div>
+
                 <div class="form-group">
                     <label for="password">New Password</label>
                     <input type="password" class="form-control" id="password" name="password">
-                    @error('password')
-                        <div class="text-danger">{{ $message }}</div>
-                    @enderror
+                    <div id="passwordError" class="text-danger"></div>
                 </div>
 
                 <a href="{{ route('login_view') }}">Login</a>
 
                 <div class="form-group">
-                    <button type="submit" class="btn btn-success btn-lg float-right">Change Password</button>
+                    <button type="submit" class="btn btn-success btn-lg float-right" id="changePasswordButton">Change Password</button>
                 </div>
             </form>
 
@@ -50,6 +47,55 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
 
+    <script>
+        $(document).ready(function() {
+            $('#changePasswordButton').click(function(e) {
+                e.preventDefault();
+
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+
+                $('#emailError').html('');
+                $('#passwordError').html('');
+
+                var formData = {
+                    'email': $('#email').val(),
+                    'password': $('#password').val()
+                };
+
+                $.ajax({
+                    url: "{{ route('password_reset', ['token' => $token]) }}",
+                    method: "POST",
+                    data: formData,
+                    success: function(response) {
+                        if (response.success) {
+                            swal("Success", response.success, "success");
+                            setTimeout(function() {
+                                window.location.href = "{{ route('login_view') }}";
+                            }, 2000);
+                        } else {
+                            swal("Error!", response.errors[0], "error");
+                        }
+                    },
+                    error: function(error) {
+                        if (error.responseJSON && error.responseJSON.errors) {
+                            if (error.responseJSON.errors.email) {
+                                $('#emailError').html(error.responseJSON.errors.email[0]);
+                            }
+                            if (error.responseJSON.errors.password) {
+                                $('#passwordError').html(error.responseJSON.errors.password[0]);
+                            }
+                        } else {
+                            swal("Error", "An unexpected error occurred.", "error");
+                        }
+                    }
+                });
+            });
+        });
+    </script>
 
 </body>
 

@@ -1,6 +1,6 @@
 @extends('dashboard-layouts.layout')
 
-@section('title', 'User List')
+@section('title', 'friend request list')
 
 @section('content')
 
