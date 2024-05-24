@@ -46,6 +46,10 @@
                     <i class="fa fa-refresh" aria-hidden="true"></i>
                 </a>
 
+                <a href="" class="btn btn-danger btn-sm">
+                    <i class="fa fa-file-pdf-o" aria-hidden="true"></i>
+                </a>
+
             </div>
         </div>
     </div>

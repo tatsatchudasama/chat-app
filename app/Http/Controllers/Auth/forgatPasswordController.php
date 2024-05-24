@@ -16,10 +16,6 @@ use Illuminate\Support\Facades\Hash;
 
 class forgatPasswordController extends Controller
 {
-    public function forgot_password(){
-        return view('Auth.forgatPassword');
-    }
-
     public function password_change_email(Request $request){
         $request->validate([
             'email' => 'required|email|exists:users,email',

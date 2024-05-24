@@ -26,8 +26,6 @@ Route::post('registration', [LoginController::class, 'registration'])->name('reg
 Route::get('', [LoginController::class, 'login_view'])->name('login_view'); //login-view
 Route::post('login', [LoginController::class, 'login'])->name('login');
 
-
-Route::get('forgot-password', [forgatPasswordController::class, 'forgot_password'])->name('forgot_password');
 Route::post('password-change-email', [forgatPasswordController::class, 'password_change_email'])->name('password_change_email');
 
 Route::get('password-reset-view/{token}', [forgatPasswordController::class, 'password_reset_view'])->name('password_reset_view');
