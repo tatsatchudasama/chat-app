@@ -53,30 +53,6 @@ class chatUserController extends Controller
         ]);
     }
 
-    // public function get_message(Request $request)
-    // {
-    //     $login_user_email = auth()->user()->email;
-
-    //     $receiver_user_email = $request->input('receiver_user_emails');
-
-    //     $get_messages = ChatUser::where('sender_email', $login_user_email)
-    //                             ->where('receiver_email', $receiver_user_email)
-    //                             ->get();
-
-    //     $send_messages = ChatUser::where('receiver_email', $login_user_email)
-    //                             ->where('sender_email', $receiver_user_email)
-    //                             ->get();
-
-    //     return response()->json(
-    //         [
-    //             'get_messages' => $get_messages,
-    //             'send_messages' => $send_messages
-    //         ]
-    //     );
-
-    // }
-
-
     public function get_message(Request $request)
     {
         $login_user_email = auth()->user()->email;
