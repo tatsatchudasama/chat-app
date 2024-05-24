@@ -5,6 +5,14 @@
 @section('content')
 
 <div class="container">
+
+    <h2>Friend Request List</h2>
+
+    <div class="mb-4">
+        <div class="btn btn-secondary ">Total Request : {{ $total_request }}</div>
+        <div class="btn btn-secondary ">Total Request Accept : {{ $total_request_accept }}</div>
+    </div>
+
     <table id="friendRequestsTable" class="table table-striped">
         <thead>
             <tr>
